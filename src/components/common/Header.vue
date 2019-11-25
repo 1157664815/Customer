@@ -28,7 +28,7 @@
                     <span class="btn-bell-badge" v-if="message"></span>
                 </div>
                 <!-- 用户头像 -->
-                <div class="user-avator">
+                <div class="user-avator" @click="ChangetheAvatar">
                     <img src="../../assets/img/img.jpg" />
                 </div>
                 <!-- 用户名下拉菜单 -->
@@ -106,6 +106,10 @@ export default {
                 }
             }
             this.fullscreen = !this.fullscreen;
+        },
+        //更换头像
+        ChangetheAvatar() {
+            this.$router.push({ path: '/PersonalSettings' });
         }
     },
     mounted() {
