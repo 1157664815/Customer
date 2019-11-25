@@ -5,14 +5,14 @@ import ElementUI from 'element-ui';
 import axios from 'axios'
 import vueRsource from 'vue-resource'
 import Vuex from 'vuex'
-import store from './store/store'
 import VueCookies from 'vue-cookies'
+import md5 from 'js-md5';
 import 'element-ui/lib/theme-chalk/index.css'; // 默认主题
 // import './assets/css/theme-green/index.css'; // 浅绿色主题
 import './assets/css/icon.css';
 import './components/common/directives';
 import 'babel-polyfill';
-import md5 from 'js-md5';
+
 //Vue.prototype.$http = axios
 Vue.config.productionTip = false;
 Vue.use(VueCookies)
@@ -60,6 +60,5 @@ router.beforeEach((to, from, next) => {
 
 new Vue({
     router,
-    store,
     render: h => h(App)
 }).$mount('#app');
