@@ -56,6 +56,7 @@ export default {
         return {
             items: [],
             collapse: false,
+            //超级管理员
             admin: [
                 {
                     icon: 'el-icon-lx-home',
@@ -103,23 +104,6 @@ export default {
                     index: 'icon',
                     title: '自定义图标'
                 },
-
-                {
-                    icon: 'el-icon-rank',
-                    index: '6',
-                    title: '拖拽组件',
-                    subs: [
-                        {
-                            index: 'drag',
-                            title: '拖拽列表'
-                        },
-                        {
-                            index: 'dialog',
-                            title: '拖拽弹框'
-                        }
-                    ]
-                },
-
                 {
                     icon: 'el-icon-lx-warn',
                     index: '7',
@@ -141,6 +125,7 @@ export default {
                     title: '个人设置'
                 }
             ],
+            //机构管理员
             user: [
                 {
                     icon: 'el-icon-lx-home',
@@ -189,6 +174,7 @@ export default {
                     title: '个人设置'
                 }
             ],
+            //客服
             service: [
                 {
                     icon: 'el-icon-lx-home',

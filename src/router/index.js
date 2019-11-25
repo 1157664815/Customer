@@ -4,6 +4,7 @@ import Router from 'vue-router';
 Vue.use(Router);
 
 const router = new Router({
+    mode: 'history',
     routes: [{
             path: '/login',
             component: () =>
@@ -85,20 +86,8 @@ const router = new Router({
                     meta: { title: '文件上传', xian: '0' }
                 },
 
-                {
-                    // 拖拽列表组件
-                    path: '/drag',
-                    component: () =>
-                        import ( /* webpackChunkName: "drag" */ '../components/page/DragList.vue'),
-                    meta: { title: '拖拽列表', xian: '0' }
-                },
-                {
-                    // 拖拽Dialog组件
-                    path: '/dialog',
-                    component: () =>
-                        import ( /* webpackChunkName: "dragdialog" */ '../components/page/DragDialog.vue'),
-                    meta: { title: '拖拽弹框', xian: '0' }
-                },
+
+
 
                 {
                     // 权限页面

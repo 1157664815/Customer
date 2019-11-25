@@ -22,8 +22,7 @@ Vue.prototype.$md5 = md5;
 Vue.use(ElementUI, {
     size: 'small'
 });
-
-/* //使用钩子函数对路由进行权限跳转 to（去向）我们要访问的路由  from（来源）路由从哪里跳转到哪里  next 下一步的选择
+/* 
 router.beforeEach((to, from, next) => {
     document.title = `${to.meta.title} | vue-manage-system`;
     const role = localStorage.getItem('ms_username');
@@ -43,6 +42,7 @@ router.beforeEach((to, from, next) => {
         }
     }
 }); */
+//使用钩子函数对路由进行权限跳转 to（去向）我们要访问的路由  from（来源）路由从哪里跳转到哪里  next 下一步的选择
 router.beforeEach((to, from, next) => {
     // console.log(to.path);
     if ($cookies.get('tokenpa') != null || to.path == '/login') { //判断tokenpa是否存在
@@ -50,16 +50,11 @@ router.beforeEach((to, from, next) => {
         let quan = sessionStorage.getItem('jurisdiction');
         if (to.meta.xian >= quan) {
             next();
-            // console.log(to.meta);
-            // console.log(from.meta);
         } else {
             next('/403');
-            // console.log('wu入页面');
         }
-
     } else {
         next('/login');
-        //  console.log('登录页');
     }
 })
 
