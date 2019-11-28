@@ -2,21 +2,14 @@
     <div>
         <el-row :gutter="20">
             <el-col :span="8">
-                <el-card shadow="hover" class="mgb20" style="height:252px;">
+                <el-card shadow="hover" class="mgb20" style="height:200px;">
                     <div class="user-info">
                         <img src="../../assets/img/img.jpg" class="user-avator" alt />
                         <div class="user-info-cont">
                             <div class="user-info-name">{{Username}}</div>
                             <div>{{role}}</div>
+                            <div class="user-info-list">上次登录时间：2018-01-01</div>
                         </div>
-                    </div>
-                    <div class="user-info-list">
-                        上次登录时间：
-                        <span>2018-01-01</span>
-                    </div>
-                    <div class="user-info-list">
-                        上次登录地点：
-                        <span>东莞</span>
                     </div>
                 </el-card>
                 <el-card shadow="hover" style="height:252px;">
@@ -74,8 +67,8 @@
 export default {
     data() {
         return {
-            Username: sessionStorage.getItem('ms_username'), //账号
-            name: sessionStorage.getItem('jurisdiction') //权限
+            Username: $cookies.get('tokenpa').title, //账号
+            name: $cookies.get('tokenpower') //权限
         };
     },
 
@@ -83,9 +76,13 @@ export default {
         role() {
             //return this.name === '0' ? '超级管理员' : '客服';
             if (this.name === '0') {
-                return '超级管理员';
+                return '公司高级管理员';
             } else if (this.name === '1') {
-                return '管理员';
+                return '公司管理员';
+            } else if (this.name === '2') {
+                return '机构高级管理员';
+            } else if (this.name === '3') {
+                return '机构管理员';
             } else {
                 return '客服';
             }
@@ -176,15 +173,14 @@ export default {
     font-size: 30px;
     color: #222;
 }
-
+.user-info-name {
+    margin-bottom: 10px;
+}
 .user-info-list {
     font-size: 14px;
     color: #999;
     line-height: 25px;
-}
-
-.user-info-list span {
-    margin-left: 70px;
+    margin-top: 10px;
 }
 
 .mgb20 {

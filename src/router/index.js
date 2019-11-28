@@ -9,7 +9,7 @@ const router = new Router({
             path: '/login',
             component: () =>
                 import ( /* webpackChunkName: "login" */ '../components/page/Login.vue'),
-            meta: { xian: '3' },
+            meta: { xian: '6' },
         },
         /* {
                     path: '/',
@@ -28,7 +28,7 @@ const router = new Router({
                     path: '/dashboard',
                     component: () =>
                         import ( /* webpackChunkName: "dashboard" */ '../components/page/Dashboard.vue'),
-                    meta: { title: '首页', xian: '2' }, //修改标签属性
+                    meta: { title: '首页', xian: '4' }, //修改标签属性
 
                 },
                 {
@@ -39,16 +39,22 @@ const router = new Router({
 
                 },
                 {
-                    path: '/table',
+                    path: '/administrators',
                     component: () =>
-                        import ( /* webpackChunkName: "table" */ '../components/page/BaseTable.vue'),
-                    meta: { title: '基础表格', xian: '1' }
+                        import ( /* webpackChunkName: "table" */ '../components/page/Administrators.vue'),
+                    meta: { title: '管理员列表', xian: '3' }
+                },
+                {
+                    path: '/customerservice',
+                    component: () =>
+                        import ( /* webpackChunkName: "table" */ '../components/page/Customerservice.vue'),
+                    meta: { title: '客服列表', xian: '3' }
                 },
                 {
                     path: '/tabs',
                     component: () =>
                         import ( /* webpackChunkName: "tabs" */ '../components/page/Tabs.vue'),
-                    meta: { title: 'tab选项卡', xian: '1' }
+                    meta: { title: 'tab选项卡', xian: '3' }
                 },
                 {
                     path: '/form',
@@ -62,21 +68,21 @@ const router = new Router({
                     path: '/markdown',
                     component: () =>
                         import ( /* webpackChunkName: "markdown" */ '../components/page/Markdown.vue'),
-                    meta: { title: '客服', xian: '2' }
+                    meta: { title: '客服', xian: '4' }
                 },
                 {
                     // 用户管理组件
                     path: '/AddManagement',
                     component: () =>
                         import ( /* webpackChunkName: "markdown" */ '../components/page/ManagementSettings.vue'),
-                    meta: { title: '管理设置', xian: '1' }
+                    meta: { title: '管理设置', xian: '3' }
                 },
                 {
                     // 个人设置组件
                     path: '/PersonalSettings',
                     component: () =>
                         import ( /* webpackChunkName: "markdown" */ '../components/page/PersonalSettings.vue'),
-                    meta: { title: '个人设置', xian: '2' }
+                    meta: { title: '个人设置', xian: '4' }
                 },
                 {
                     // 图片上传组件
@@ -85,28 +91,24 @@ const router = new Router({
                         import ( /* webpackChunkName: "upload" */ '../components/page/Upload.vue'),
                     meta: { title: '文件上传', xian: '0' }
                 },
-
-
-
-
                 {
                     // 权限页面
                     path: '/permission',
                     component: () =>
                         import ( /* webpackChunkName: "permission" */ '../components/page/Permission.vue'),
-                    meta: { title: '权限测试', permission: true, xian: '2' }
+                    meta: { title: '权限测试', permission: true, xian: '4' }
                 },
                 {
                     path: '/404',
                     component: () =>
                         import ( /* webpackChunkName: "404" */ '../components/page/404.vue'),
-                    meta: { title: '404', xian: '2' }
+                    meta: { title: '404', xian: '4' }
                 },
                 {
                     path: '/403',
                     component: () =>
                         import ( /* webpackChunkName: "403" */ '../components/page/403.vue'),
-                    meta: { title: '403', xian: '2' }
+                    meta: { title: '403', xian: '4' }
                 },
 
             ]

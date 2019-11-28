@@ -18,7 +18,13 @@
                         <el-button slot="prepend" icon="el-icon-lx-lock"></el-button>
                     </el-input>
                 </el-form-item>
-
+                <el-form-item prop="power">
+                    <el-radio-group v-model="param.power">
+                        <el-radio :label="0">公司</el-radio>
+                        <el-radio :label="1">机构</el-radio>
+                        <el-radio :label="2">客服</el-radio>
+                    </el-radio-group>
+                </el-form-item>
                 <div class="login-btn">
                     <el-button type="primary" @click="submitForm()">登录</el-button>
                 </div>
@@ -28,12 +34,14 @@
 </template>
 
 <script>
+import Qs from 'qs';
 export default {
     data: function() {
         return {
             param: {
                 username: 'admin',
-                password: '123456'
+                password: '123456',
+                power: 0
             },
             rules: {
                 username: [{ required: true, message: '请输入用户名', trigger: 'blur' }],
@@ -43,30 +51,33 @@ export default {
     },
     methods: {
         submitForm() {
-            this.$http.get('/api/user.php?p=' + this.param.username).then(response => {
-                var username = response.body.username; //get到的账号
-                var password = response.body.userpasswd; //get到的密码
-                //console.log(this.param.username);
-                // console.log(this.$md5(this.param.password));
-                if (username == this.param.username && password == this.$md5(this.param.password)) {
-                    this.$message.success('登录成功');
-                    sessionStorage.setItem('ms_username', this.param.username); //存入账号名  关闭销毁
-                    sessionStorage.setItem('jurisdiction', response.body.power); //存入权限   关闭销毁
-                    // var userInfo = { user: this.param.username, pass: this.param.password };
-                    // this.$store.commit('$_setToken', this.param.username);
-                    // console.log(this.$store.commit('$_setToken'));
-                    // console.log(userInfo);
-                    this.$cookies.set('tokenpa', this.$md5(password), 1800); //存入cookie MD5加密
-                    // console.log(this.$cookies.get('tokenpa'));
-                    this.$router.push('/');
-                } else if ('' == this.param.username || '' == this.param.password) {
-                    this.$message.error('账号和密码不能为空');
-                } else {
-                    this.$message.error('请输入正确的账号和密码');
-                    // console.log('error submit!!');
-                    return false;
-                }
-            });
+            this.$http
+                .post(
+                    '/api/api/user/login',
+                    Qs.stringify({
+                        username: this.param.username, //发送账号
+                        userpasswd: this.param.password, //发送密码
+                        userform: this.param.power //发送权限
+                    }),
+                    { headers: { 'Content-Type': 'application/x-www-form-urlencoded' } }
+                )
+                .then(response => {
+                    // console.log(response.data);
+                    if (response.data.code == 200) {
+                        this.$message.success('登录成功');
+                        this.$cookies.set('tokenpa', response.data.data, 28800); //存入token
+                        this.$cookies.set('tokenpower', response.data.data.power, 28800); //存入权限
+                        this.$cookies.set('tokenform', this.param.power, 28800); //存入权限
+                        //console.log($cookies.get('tokenpa'));
+                        this.$router.push('/');
+                    } else if ('' == this.param.username || '' == this.param.password) {
+                        this.$message.error('账号和密码不能为空');
+                    } else {
+                        this.$message.error('请输入正确的账号和密码');
+                        // console.log('error submit!!');
+                        return false;
+                    }
+                });
         }
     }
 };

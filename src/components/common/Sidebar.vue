@@ -70,14 +70,25 @@ export default {
                 },
                 {
                     icon: 'el-icon-s-custom',
-                    index: 'AddManagement',
-                    title: '管理设置'
+                    index: '2',
+                    title: '管理设置',
+                    subs: [
+                        {
+                            index: 'AddManagement',
+                            title: '管理设置'
+                        },
+
+                        {
+                            index: 'administrators',
+                            title: '管理员列表'
+                        },
+                        {
+                            index: 'customerservice',
+                            title: '客服列表'
+                        }
+                    ]
                 },
-                {
-                    icon: 'el-icon-lx-cascades',
-                    index: 'table',
-                    title: '基础表格'
-                },
+
                 {
                     icon: 'el-icon-lx-copy',
                     index: 'tabs',
@@ -139,13 +150,23 @@ export default {
                 },
                 {
                     icon: 'el-icon-s-custom',
-                    index: 'AddManagement',
-                    title: '管理设置'
-                },
-                {
-                    icon: 'el-icon-lx-cascades',
-                    index: 'table',
-                    title: '基础表格'
+                    index: '2',
+                    title: '管理设置',
+                    subs: [
+                        {
+                            index: 'AddManagement',
+                            title: '管理设置'
+                        },
+
+                        {
+                            index: 'administrators',
+                            title: '管理员列表'
+                        },
+                        {
+                            index: 'customerservice',
+                            title: '客服列表'
+                        }
+                    ]
                 },
                 {
                     icon: 'el-icon-lx-copy',
@@ -222,10 +243,11 @@ export default {
             bus.$emit('collapse-content', msg);
         });
 
-        let items = sessionStorage.getItem('jurisdiction');
+        let items = $cookies.get('tokenpower');
         if (items === '0') {
             this.items = this.admin;
-        } else if (items === '1') {
+        } else if (items <= '3') {
+            // console.log(items);
             this.items = this.user;
         } else {
             this.items = this.service;

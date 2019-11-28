@@ -22,38 +22,22 @@ Vue.prototype.$md5 = md5;
 Vue.use(ElementUI, {
     size: 'small'
 });
-/* 
-router.beforeEach((to, from, next) => {
-    document.title = `${to.meta.title} | vue-manage-system`;
-    const role = localStorage.getItem('ms_username');
-    if (!role && to.path !== '/login') {
-        next('/login');
-    } else if (to.meta.permission) {
-        // 如果是管理员权限则可进入，这里只是简单的模拟管理员权限而已
-        role === 'admin' ? next() : next('/403');
-    } else {
-        // 简单的判断IE10及以下不进入富文本编辑器，该组件不兼容
-        if (navigator.userAgent.indexOf('MSIE') > -1 && to.path === '/editor') {
-            Vue.prototype.$alert('vue-quill-editor组件不兼容IE10及以下浏览器，请使用更高版本的浏览器查看', '浏览器不兼容通知', {
-                confirmButtonText: '确定'
-            });
-        } else {
-            next();
-        }
-    }
-}); */
+
 //使用钩子函数对路由进行权限跳转 to（去向）我们要访问的路由  from（来源）路由从哪里跳转到哪里  next 下一步的选择
 router.beforeEach((to, from, next) => {
     // console.log(to.path);
     if ($cookies.get('tokenpa') != null || to.path == '/login') { //判断tokenpa是否存在
-        //console.log(123);
-        let quan = sessionStorage.getItem('jurisdiction');
+        // console.log($cookies.get('tokenpa'));
+        let quan = $cookies.get('tokenpower');
+        //console.log(quan)
+        // console.log(to.meta.xian)
         if (to.meta.xian >= quan) {
             next();
         } else {
             next('/403');
         }
     } else {
+        console.log(56565656);
         next('/login');
     }
 })

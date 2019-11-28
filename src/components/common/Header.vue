@@ -50,6 +50,7 @@
 </template>
 <script>
 import bus from '../common/bus';
+import { log } from 'util';
 export default {
     data() {
         return {
@@ -61,7 +62,8 @@ export default {
     },
     computed: {
         username() {
-            let username = sessionStorage.getItem('ms_username');
+            let username = $cookies.get('tokenpa').title; //昵称
+            // console.log(username);
             return username ? username : this.name;
         }
     },
@@ -71,7 +73,8 @@ export default {
             if (command == 'loginout') {
                 // this.$cookies.set('tokenpa', this.$md5(password), 1800);
                 this.$cookies.remove('tokenpa');
-                sessionStorage.clear();
+                this.$cookies.remove('tokenpower');
+                this.$cookies.remove('tokenform');
                 this.$router.push('/login');
             }
         },

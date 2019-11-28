@@ -3,7 +3,7 @@
         <div class="crumbs">
             <el-breadcrumb separator="/">
                 <el-breadcrumb-item>
-                    <i class="el-icon-lx-cascades"></i> 基础表格
+                    <i class="el-icon-lx-cascades"></i> 管理员列表
                 </el-breadcrumb-item>
             </el-breadcrumb>
         </div>
@@ -113,7 +113,11 @@ export default {
                 pageIndex: 1,
                 pageSize: 10
             },
-            tableData: [],
+            tableData: [
+                {
+                    name: 'admin' //用户名
+                }
+            ],
             multipleSelection: [],
             delList: [],
             editVisible: false,

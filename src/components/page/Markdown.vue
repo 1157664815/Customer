@@ -17,12 +17,21 @@
                         />
                     </div>
                     <div class="Choice">
-                        <span>客服小童</span>
+                        <span>{{nickname}}</span>
                         <div>
-                            <select class="state">
-                                <option>在线</option>
-                                <option>离线</option>
-                            </select>
+                            <el-select
+                                v-model="value"
+                                placeholder="请选择"
+                                size="mini"
+                                style="width:100px"
+                            >
+                                <el-option
+                                    v-for="item in options"
+                                    :key="item.value"
+                                    :label="item.label"
+                                    :value="item.value"
+                                ></el-option>
+                            </el-select>
                         </div>
                     </div>
                 </header>
@@ -110,6 +119,7 @@ export default {
             editorContent: '', //富文本值
             message: 'first', //绑定值
             showHeader: false,
+            nickname: $cookies.get('tokenpa').title,
             unread: [
                 //会话
                 {
@@ -128,7 +138,18 @@ export default {
                     title: '王五'
                 }
             ],
-            isActive: true
+            isActive: true,
+            options: [
+                {
+                    value: '选项1',
+                    label: '在线'
+                },
+                {
+                    value: '选项2',
+                    label: '离线'
+                }
+            ],
+            value: '选项1'
         };
     },
     // catchData是一个类似回调函数，来自父组件，当然也可以自己写一个函数，主要是用来获取富文本编辑器中的html内容用来传递给服务端
@@ -202,16 +223,15 @@ export default {
     height: 70px;
 }
 .Choice {
-    padding: 20px;
+    padding: 15px;
     float: left;
 }
-.Choice span {
+.Choice > span {
+    height: 35px;
+    line-height: 35px;
     color: darkgray;
 }
-.state {
-    margin-top: 20px;
-    width: 80px;
-}
+
 /*聊天界面 */
 .Interface {
     width: 950px;
