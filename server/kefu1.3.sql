@@ -30,7 +30,7 @@ CREATE TABLE `v_admin` (
 
 /*Data for the table `v_admin` */
 
-insert  into `v_admin`(`v_id`,`v_name`,`v_passwd`,`v_power`,`v_time`,`v_state`,`v_token`) values (1,'admin','e10adc3949ba59abbe56e057f20f883e','0','2019-11-28 17:17:54','0','28a30475ec698e9fab95671eda16bf5b');
+insert  into `v_admin`(`v_id`,`v_name`,`v_passwd`,`v_power`,`v_time`,`v_state`,`v_token`) values (1,'admin','e10adc3949ba59abbe56e057f20f883e','0','2019-11-29 15:57:43','0','8874a664d829fae474bdd6ed7cd2d8a6');
 
 /*Table structure for table `v_institution` */
 
@@ -47,9 +47,11 @@ CREATE TABLE `v_institution` (
   `v2_fund` varchar(12) NOT NULL COMMENT '注册资金',
   `v2_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   KEY `v2_id` (`v2_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 /*Data for the table `v_institution` */
+
+insert  into `v_institution`(`v2_id`,`v2_title`,`v2_pname`,`v2_phone`,`v2_website`,`v2_itype`,`v2_item`,`v2_fund`,`v2_time`) values (1,'机构名称','联系人姓名','联系人电话','机构网站','行业类型','经营项目','注册资金','2019-11-29 16:54:51'),(2,'南宁','张三','110','www.baidu.com','IT','搜索','10000','2019-11-29 16:55:46');
 
 /*Table structure for table `v_institution_user` */
 
@@ -66,11 +68,11 @@ CREATE TABLE `v_institution_user` (
   `v_token` varchar(64) DEFAULT NULL COMMENT '登录令牌',
   PRIMARY KEY (`v_name`),
   KEY `v3_id` (`v_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 /*Data for the table `v_institution_user` */
 
-insert  into `v_institution_user`(`v_id`,`v_name`,`v_passwd`,`v_form`,`v_power`,`v_time`,`v_state`,`v_token`) values (1,'user','e10adc3949ba59abbe56e057f20f883e','广西','2','2019-11-28 19:15:37','0','b9c59a734278b4e96e7337156b3c29fb'),(2,'user2','e10adc3949ba59abbe56e057f20f883e','南宁','3','2019-11-28 18:27:42','0',NULL);
+insert  into `v_institution_user`(`v_id`,`v_name`,`v_passwd`,`v_form`,`v_power`,`v_time`,`v_state`,`v_token`) values (1,'user','e10adc3949ba59abbe56e057f20f883e','广西','2','2019-11-29 15:50:54','0','71d967aacec14e2bc835f09fe6cae0e2'),(2,'user2','e10adc3949ba59abbe56e057f20f883e','南宁','3','2019-11-29 16:50:02','0','9146a0f62db87c1d30fca57e3dac28a9'),(3,'1','','','','2019-11-29 16:10:13','0',NULL);
 
 /*Table structure for table `v_kefu_user` */
 
@@ -88,11 +90,11 @@ CREATE TABLE `v_kefu_user` (
   `v_token` varchar(64) DEFAULT NULL COMMENT '登录令牌',
   PRIMARY KEY (`v_name`),
   KEY `v4_id` (`v_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 /*Data for the table `v_kefu_user` */
 
-insert  into `v_kefu_user`(`v_id`,`v_name`,`v_passwd`,`v_title`,`v_form`,`v_power`,`v_time`,`v_state`,`v_token`) values (1,'kefu','e10adc3949ba59abbe56e057f20f883e','呵呵','广西职业技术学院','4','2019-11-28 18:04:36','1',NULL),(2,'kefu2','e10adc3949ba59abbe56e057f20f883e','哈哈','广西职业技','4','2019-11-28 18:04:47','0',NULL);
+insert  into `v_kefu_user`(`v_id`,`v_name`,`v_passwd`,`v_title`,`v_form`,`v_power`,`v_time`,`v_state`,`v_token`) values (1,'kefu','e10adc3949ba59abbe56e057f20f883e','呵呵','广西职业技术学院','4','2019-11-28 18:04:36','1',NULL),(2,'kefu2','e10adc3949ba59abbe56e057f20f883e','哈哈','南宁','4','2019-11-29 16:48:41','0',NULL);
 
 /*Table structure for table `v_knowledge` */
 

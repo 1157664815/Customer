@@ -6,7 +6,7 @@ favicon.ico
 # local env files
 .env.local
 .env.*.local
-/server/备份
+/server
 # Log files
 npm-debug.log*
 yarn-debug.log*

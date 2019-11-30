@@ -15,10 +15,7 @@
                     class="handle-del mr10"
                     @click="delAllSelection"
                 >批量删除</el-button>
-                <el-select v-model="query.address" placeholder="状态" class="handle-select mr10">
-                    <el-option key="1" label="在线" value="在线"></el-option>
-                    <el-option key="2" label="离线" value="离线"></el-option>
-                </el-select>
+                <span>搜索</span>
                 <el-input v-model="search" placeholder="请输入相关信息" class="handle-input mr10"></el-input>
             </div>
             <el-table
@@ -31,7 +28,7 @@
             >
                 <el-table-column type="selection" width="55" align="center"></el-table-column>
                 <el-table-column label="ID" type="index" width="65" align="center"></el-table-column>
-                <el-table-column prop="name" label="用户名" align="center"></el-table-column>
+                <el-table-column prop="name" label="客服账号" align="center"></el-table-column>
                 <el-table-column prop="title" label="昵称" align="center"></el-table-column>
                 <el-table-column prop="form" label="所属机构" align="center"></el-table-column>
                 <el-table-column prop="state" label="在线状态" align="center">
@@ -42,7 +39,12 @@
                         >{{scope.row.state}}</el-tag>
                     </template>
                 </el-table-column>
-                <el-table-column prop="timeold" label="上次登录时间" align="center"></el-table-column>
+                <el-table-column
+                    prop="timeold"
+                    :formatter="formatter"
+                    label="上次登录时间"
+                    align="center"
+                ></el-table-column>
                 <el-table-column label="操作" width="180" align="center">
                     <template slot-scope="scope">
                         <el-button
@@ -79,19 +81,26 @@
                     <el-input v-model="form.name"></el-input>
                 </el-form-item>
                 <el-form-item label="昵称">
-                    <el-input v-model="form.nickname"></el-input>
+                    <el-input v-model="form.title"></el-input>
                 </el-form-item>
                 <el-form-item label="密码">
-                    <el-input type="password" v-model="form.pass" autocomplete="off"></el-input>
+                    <el-input
+                        type="password"
+                        v-model="form.pass"
+                        autocomplete="off"
+                        placeholder="留空则不修改"
+                    ></el-input>
                 </el-form-item>
                 <el-form-item label="确认密码">
-                    <el-input type="password" v-model="form.checkPass" autocomplete="off"></el-input>
+                    <el-input
+                        type="password"
+                        v-model="form.checkPass"
+                        autocomplete="off"
+                        placeholder="留空则不修改"
+                    ></el-input>
                 </el-form-item>
                 <el-form-item label="所属机构">
-                    <el-select v-model="form.affiliate" placeholder="所属机构">
-                        <el-option key="1" label="广西职业技术学院" value="广西职业技术学院"></el-option>
-                        <el-option key="2" label="广职" value="广职"></el-option>
-                    </el-select>
+                    <el-input v-model="form.form" :disabled="true"></el-input>
                 </el-form-item>
             </el-form>
             <span slot="footer" class="dialog-footer">
@@ -110,17 +119,32 @@ export default {
     data() {
         return {
             query: {
-                address: '',
                 name: '',
                 pageIndex: 1,
                 pageSize: 10
             },
-            tableData: [],
+            tableData: [
+                /*  {
+                    id: null,
+                    name: null,
+                    title: null,
+                    form: null,
+                    timeold: null,
+                    state: null
+                } */
+            ],
             multipleSelection: [],
             delList: [],
             editVisible: false,
             pageTotal: 0,
-            form: {},
+            form: {
+                id: null,
+                name: null,
+                title: null,
+                form: null,
+                timeold: null,
+                state: null
+            },
             idx: -1,
             id: -1,
             search: ''
@@ -129,7 +153,7 @@ export default {
     created() {
         this.$http
             .post(
-                '/api/api/user/userlist',
+                '/api/api/user/kefulist',
                 Qs.stringify({
                     name: $cookies.get('tokenpa').title,
                     form: $cookies.get('tokenform'),
@@ -138,13 +162,34 @@ export default {
                 { headers: { 'Content-Type': 'application/x-www-form-urlencoded' } }
             )
             .then(obtain => {
-                this.tableData = obtain.body.data;
-                // console.log(data.body.data);
+                if (obtain.body.code == 200) {
+                    this.tableData = obtain.body.data;
+                } else {
+                    this.$cookies.remove('tokenpa');
+                    this.$cookies.remove('tokenpower');
+                    this.$cookies.remove('tokenform');
+                    this.$message.error({
+                        message: '登录状态已过期，请重新登录...',
+                        duration: 1000,
+                        onClose: function() {
+                            console.log(123);
+                            window.location = './login';
+                            //this.$router.push('/login');
+                        }
+                    });
+                }
+            })
+            .catch(fail => {
+                this.$message.error({
+                    message: '服务器请求失败...'
+                });
             });
     },
     methods: {
         //判断在线离线
         formatSex: function(row, column, cellValue) {
+            //console.log(cellValue);
+
             if (cellValue == '1') {
                 // return '在线';
                 row.state = '在线';
@@ -153,9 +198,24 @@ export default {
                 row.state = '离线';
             }
         },
+        //格式化时间
+        formatter: function(row, column, cellValue) {
+            //console.log(cellValue);
+            var da = cellValue;
+            da = new Date(da);
+            var year = da.getFullYear() + '-';
+            var month = da.getMonth() + 1 + '-';
+            var date = da.getDate() + '  ';
+            var shi = da.getHours() + ':';
+            var fen = da.getMinutes() + '';
+            // console.log([year, month, date].join('-'));
+            return [year, month, date, shi, fen].join('');
+        },
 
         // 删除操作
         handleDelete(index, row) {
+            console.log(index);
+
             // 二次确认删除
             this.$confirm('确定要删除吗？', '提示', {
                 type: 'warning'
@@ -182,8 +242,17 @@ export default {
         },
         // 编辑操作
         handleEdit(index, row) {
+            console.log(index);
+            /* this.form = row;
+            console.log((this.form = row)); */
             this.idx = index;
-            this.form = row;
+
+            this.form.id = row.id;
+            this.form.name = row.name;
+            this.form.title = row.title;
+            this.form.form = row.form;
+            this.form.timeold = row.timeold;
+            this.form.state = row.state;
             this.editVisible = true;
         },
         // 保存编辑
@@ -191,6 +260,14 @@ export default {
             this.editVisible = false;
             this.$message.success(`修改第 ${this.idx + 1} 行成功`);
             this.$set(this.tableData, this.idx, this.form);
+            this.form = {
+                id: null,
+                name: null,
+                title: null,
+                form: null,
+                timeold: null,
+                state: null
+            };
         },
         // 分页导航
         handlePageChange(val) {

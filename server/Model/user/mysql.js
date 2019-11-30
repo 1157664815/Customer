@@ -31,7 +31,10 @@ var mysql = {
         },
         kefu: {
             check: [
-                "select v_id as id,v_name as name,v_title as title,v_form as form,v_time as timeold,v_state as state from v_kefu_user"//客服列表
+                "select v_id as id,v_name as name,v_title as title,v_form as form,v_time as timeold,v_state as state from v_kefu_user where v_form = ?"//客服列表
+            ],
+            del: [
+                "DELETE FROM v_kefu_user WHERE v_id IN (?)",
             ]
         },
         admin: {
@@ -42,6 +45,11 @@ var mysql = {
         user: {
             check: [
                 "select v_id as id,v_name as name,v_form as form,v_time as timeold,v_state as state,'1' as statu from v_institution_user"//机构管理员列表
+            ]
+        },
+        info: {
+            inst: [
+                "select v2_id as id,v2_title as title from"
             ]
         }
     }

@@ -18,8 +18,9 @@
                         <el-button slot="prepend" icon="el-icon-lx-lock"></el-button>
                     </el-input>
                 </el-form-item>
+                <!-- @keyup.enter.native="submitForm()"    监听键盘回车登录 -->
                 <el-form-item prop="power">
-                    <el-radio-group v-model="param.power">
+                    <el-radio-group v-model="param.power" @keyup.enter.native="submitForm()">
                         <el-radio :label="0">公司</el-radio>
                         <el-radio :label="1">机构</el-radio>
                         <el-radio :label="2">客服</el-radio>
@@ -77,6 +78,9 @@ export default {
                         // console.log('error submit!!');
                         return false;
                     }
+                })
+                .catch(fail => {
+                    this.$message.error('服务器连接失败...');
                 });
         }
     }

@@ -37,7 +37,6 @@ router.beforeEach((to, from, next) => {
             next('/403');
         }
     } else {
-        console.log(56565656);
         next('/login');
     }
 })

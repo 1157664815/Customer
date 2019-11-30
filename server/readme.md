@@ -1,35 +1,33 @@
 一、必要依赖
 1.express模块
-npm i express -S
-
+> npm i express -S
 2.mysql数据库模块
-npm i mysql -S
-
+> npm i mysql -S
 3.MD5模块
-npm i blueimp-md5
-
+> npm i blueimp-md5
 4.post请求模块
-npm i body-parser
+> npm i body-parser
 
 二、接口记录
-1.后台登录接口
-api地址: POST
-/api/user/login
+# 1.后台登录接口
+## api地址: POST
+- /api/user/login
 
 请求参数：
-username        用户账号
-userpasswd      用户密码
-userform        用户身份（0公司 1机构 2客服）
+- username        用户账号
+  userpasswd      用户密码
+  userform        用户身份（0公司 1机构 2客服）
 
 响应参数：
-code            响应状态，200为成功，204为失败
-msg             响应返回消息
-data            响应返回数据
-->  title           如果不是客服则为用户账号，反之为昵称
-->  token           登录成功返回令牌
-->  power           登录账号权限
+- code            响应状态，200为成功，204为失败
+  msg             响应返回消息
+  data            响应返回数据
+  ->  title           如果不是客服则为用户账号，反之为昵称
+  ->  token           登录成功返回令牌
+  ->  power           登录账号权限
 
 原始数据：
+```json
 {
     "code":"200",
     "msg":"登录成功",
@@ -39,27 +37,29 @@ data            响应返回数据
         "power":"0"
     }
 }
+```
+# 2.客服列表接口
+## api地址: POST
+- /api/user/kefulist
 
-2.客服列表接口
-api地址: POST
-/api/user/kefulist
 请求参数：
-name        用户账号
-form        用户身份（0公司 1机构 2客服）
-token       当前登录令牌
+- name        用户账号
+  form        用户身份（0公司 1机构 2客服）
+  token       当前登录令牌
 
 响应参数：
-code            响应状态，200为成功，204为失败
-msg             响应返回消息
-data            响应返回数据
-->  id              ID
-->  name            客服账号
-->  title           客服昵称
-->  form            客服所属机构
-->  timeold         最后登录时间
-->  state           在线状态（0离线 1在线）
+- code            响应状态，200为成功，204为失败
+  msg             响应返回消息
+  data            响应返回数据(数组)
+  ->  id              ID
+  ->  name            客服账号
+  ->  title           客服昵称
+  ->  form            客服所属机构
+  ->  timeold         最后登录时间
+  ->  state           在线状态（0离线 1在线）
 
 原始数据：
+```json
 {
     "code":"200",
     "msg":"数据获取成功",
@@ -82,26 +82,53 @@ data            响应返回数据
         }
     ]
 }
+```
 
-3.管理员列表接口
-api地址: POST
-/api/user/userlist
-请求参数：
-name        用户账号
-form        用户身份（0公司 1机构 2客服）
-token       当前登录令牌
+# 3.客服删除接口
+## api地址：POST
+- - /api/user/kefudel
+
+- name        用户账号
+  form        用户类型
+  token       Token
+  power       用户权限
+  id          客服ID(数组 例[ '1', '2' ])
 
 响应参数：
-code            响应状态，200为成功，204为失败
-msg             响应返回消息
-data            响应返回数据
-->  id              ID
-->  name            客服账号
-->  form            客服所属机构
-->  timeold         最后登录时间
-->  state           在线状态（0离线 1在线）
+- code            响应状态，200为成功，204为失败
+  msg             响应返回消息
+  data            响应返回数据(数组)
 
 原始数据：
+```json
+{
+    "code":200,
+    "msg":"删除成功",
+    "data":{}
+}
+```
+
+# 4.管理员列表接口
+## api地址: POST
+- /api/user/userlist
+
+请求参数：
+- name        用户账号
+  form        用户身份（0公司 1机构 2客服）
+  token       当前登录令牌
+
+响应参数：
+- code            响应状态，200为成功，204为失败
+  msg             响应返回消息
+  data            响应返回数据(数组)
+  ->  id              ID
+  ->  name            客服账号
+  ->  form            客服所属机构
+  ->  timeold         最后登录时间
+  ->  state           在线状态（0离线 1在线）
+
+原始数据：
+```json
 {
   code: '200',
   msg: '数据获取成功',
@@ -115,6 +142,7 @@ data            响应返回数据
     }
   ]
 }
+```
 
 
 
@@ -124,6 +152,5 @@ data            响应返回数据
 
 
 
-
-#############
+############# 
 http://127.0.0.1:3600/api/user/

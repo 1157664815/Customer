@@ -1,5 +1,5 @@
 # vue-manage-system
-
+     1
 <a href="https://github.com/vuejs/vue">
     <img src="https://img.shields.io/badge/vue-2.6.10-brightgreen.svg" alt="vue">
   </a>
@@ -130,7 +130,7 @@ vue.js 封装 sChart.js 的图表组件。访问地址：[vue-schart](https://gi
 </style>
 ```
 
-## 其他注意事项
+## 其他注意事项  02
 
 ### 一、如果我不想用到上面的某些组件呢，那我怎么在模板中删除掉不影响到其他功能呢？
 

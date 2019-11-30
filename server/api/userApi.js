@@ -42,6 +42,9 @@ function sendData(_code, _msg, _data = {}) {
     return ret_data;
 }
 
+
+
+
 /**
  * POST
  * 管理员列表
@@ -72,7 +75,7 @@ router.post('/userlist', (request, response) => {
         })).catch((reason => {
             console.log(1);
             //令牌验证失败
-            _tips = sendData(204, '数据获取失败');
+            _tips = sendData(204, '身份验证过期');
             response.json(_tips);
         })).then((res => {
             //数据查询成功返回
@@ -101,6 +104,48 @@ router.post('/userlist', (request, response) => {
         //直接访问返回
         response.status(404).send('Cannot GET 404');
     }
+
+    console.log('userlist');
+});
+
+/**
+ * POST
+ * 客服账号删除
+ */
+router.post('/kefudel', (request, response) => {
+    const name = request.body.name;//用户账号
+    const form = request.body.form;//用户类型
+    const token = request.body.token;//token
+    const power = request.body.power;//用户权限
+    const kefuid = request.body.id;//id
+    const sqlcheck = sqlUser.user.token3.check[form];//令牌检查语句
+    const sqldel = sqlUser.user.kefu.del[0];//客服删除语句
+    if (power <= '2' && token != undefined && name != undefined && form != undefined && kefuid != undefined) {
+        exeLogin.checktoken(conn, sqlcheck, [name, token]).then((res => {
+            if (res) {
+                //二次验证权限
+                if (res['v_power']) {
+                    console.log(sqldel);
+                    return exeUser.delUserData(conn, sqldel, [kefuid]);
+                }
+            }
+        })).catch((reason => {
+            //令牌验证失败
+            _tips = sendData(204, '身份验证过期');
+            response.json(_tips);
+        })).then((res => {
+            if (res) {
+                _tips = sendData(200, '删除成功');
+                response.json(_tips);
+            } else {
+                _tips = sendData(204, '删除失败');
+                response.json(_tips);
+            }
+        }))
+    } else {
+        //直接访问返回
+        response.status(404).send('Cannot GET 404');
+    }
 });
 
 /**
@@ -113,7 +158,7 @@ router.post('/kefulist', (request, response) => {
     const form = request.body.form;//类型
     const token = request.body.token;//token
     const sqlcheck = sqlUser.user.token3.check[form];//令牌检查语句
-    const sqlkefu = sqlUser.user.kefu.check[form];//客服列表语句
+    const sqlkefu = sqlUser.user.kefu.check[0];//客服列表语句
     //如果参数不符合则不执行
     if (token != undefined && name != undefined && form != undefined) {
         //进行令牌验证
@@ -121,11 +166,11 @@ router.post('/kefulist', (request, response) => {
             //如果令牌验证通过
             if (res) {
                 //查询数据返回
-                return exeUser.getUserList(conn, sqlkefu, []);
+                return exeUser.getUserList(conn, sqlkefu, [res['v_form']]);
             }
         })).catch((reason => {
             //令牌验证失败
-            _tips = sendData(204, '数据获取失败');
+            _tips = sendData(204, '身份验证过期');
             response.json(_tips);
         })).then((res => {
             //数据查询成功返回
@@ -140,6 +185,7 @@ router.post('/kefulist', (request, response) => {
         //直接访问返回
         response.status(404).send('Cannot GET 404');
     }
+    console.log('kefulist');
 });
 
 
@@ -188,6 +234,7 @@ router.post('/login', (request, response) => {
             response.json(_tips);
         }
     });
+    console.log('login');
 });
 
 
